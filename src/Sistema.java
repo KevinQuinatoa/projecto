@@ -211,8 +211,9 @@ public class Sistema {
 
         System.out.print("Ingrese el ID (ej: PC-01): ");
         String id = sc.next();
+        sc.nextLine();
         System.out.print("Ingrese el nombre: ");
-        String nombre = sc.next();
+        String nombre = sc.nextLine();
 
         double precio = leerPrecio();
         double costoCompra = leerCostoCompra(precio);
