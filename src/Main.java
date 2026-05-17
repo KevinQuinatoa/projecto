@@ -1,15 +1,44 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        Sistema sis = new Sistema();
+        Scanner sc = new Scanner(System.in);
+        int opc1 = 0, opc2 = 0;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        do {
+            opc1 = sis.menu();
+
+            switch (opc1) {
+                case 1:
+                    sis.crearEquipo();
+                    break;
+                case 2:
+                    sis.mostrarPrecioFinal();
+                    break;
+                case 3:
+                    sis.mostrarFicha();
+                    break;
+                case 4:
+                    sis.registrarVenta();
+                    break;
+                case 5:
+                    sis.mostrarHistorialVentas();
+                    break;
+                case 6:
+                    sis.mostrarStockBajo();
+                    break;
+                default:
+                    System.out.println("Opcion no valida");
+                    break;
+            }
+
+            System.out.println("Desea seleccionar otra opcion: ");
+            System.out.print("1.Si / 2.No: ");
+            opc2 = sc.nextInt();
+
+        } while (opc2 == 1);
+
+        System.out.println("Hasta luego.");
     }
 }
