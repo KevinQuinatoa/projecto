@@ -1,10 +1,12 @@
+import java.time.LocalDate;
+
 public class Proyector extends Equipo {
     private int lumenes;
     private String resolucion;
 
     public Proyector(String id, String nombre, double costoCompra, double precio,
-                     int cantidad, int lumenes, String resolucion) {
-        super(id, nombre, "Proyector", costoCompra, precio, cantidad);
+                     int cantidad, LocalDate fechaIngreso, int lumenes, String resolucion) {
+        super(id, nombre, "Proyector", costoCompra, precio, cantidad, fechaIngreso);
         this.lumenes = lumenes;
         this.resolucion = resolucion;
     }
@@ -23,20 +25,28 @@ public class Proyector extends Equipo {
         return "--- FICHA PROYECTOR ---\n" +
                 "ID         : " + getId() + "\n" +
                 "Nombre     : " + getNombre() + "\n" +
-                "Lúmenes    : " + lumenes + "\n" +
-                "Resolución : " + resolucion + "\n" +
+                "Lumenes    : " + lumenes + "\n" +
+                "Resolucion : " + resolucion + "\n" +
                 "Costo comp.: $" + getCostoCompra() + "\n" +
                 "Precio vta : $" + getPrecio() + "\n" +
                 "P. Final   : $" + calcularPrecioFinal() + "\n" +
                 "Ganancia   : $" + calcularGanancia() + "\n" +
                 "Stock      : " + getCantidad() + "\n" +
-                "Ingreso    : " + getFechaIngreso() + "\n" +
+                "Fec. ingres: " + getFechaIngreso() + "\n" +
                 "Estado     : " + getEstado();
     }
 
-    public int getLumenes() { return lumenes; }
-    public void setLumenes(int lumenes) { this.lumenes = lumenes; }
+    public int getLumenes() {
+        return lumenes;
+    }
+    public void setLumenes(int lumenes) {
+        this.lumenes = lumenes;
+    }
 
-    public String getResolucion() { return resolucion; }
-    public void setResolucion(String resolucion) { this.resolucion = resolucion; }
+    public String getResolucion() {
+        return resolucion;
+    }
+    public void setResolucion(String resolucion) {
+        this.resolucion = resolucion;
+    }
 }

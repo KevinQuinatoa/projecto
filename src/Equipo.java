@@ -10,26 +10,25 @@ public abstract class Equipo {
     private String estado;
     private LocalDate fechaIngreso;
 
-    // ── RESTRICCIONES DEL SISTEMA ─────────────────────────────
-    public static final int    MAX_INVENTARIO   = 20;      // espacio: máximo 20 equipos
-    public static final double PRECIO_MIN       = 500.0;   // presupuesto mínimo por equipo
-    public static final double PRECIO_MAX       = 2000.0;  // presupuesto máximo por equipo
-    public static final int    ANIO_FECHA_MIN   = 2020;    // tiempo: fecha de ingreso desde 2020
-    public static final int    STOCK_MINIMO     = 3;       // alerta de stock bajo
-
     public Equipo(String id, String nombre, String tipo,
-                  double costoCompra, double precio, int cantidad) {
+                  double costoCompra, double precio, int cantidad,
+                  LocalDate fechaIngreso) {
         this.id = id;
         this.nombre = nombre;
         this.tipo = tipo;
         this.costoCompra = costoCompra;
         this.precio = precio;
         this.cantidad = cantidad;
-        this.estado = (cantidad > 0) ? "disponible" : "agotado";
-        this.fechaIngreso = LocalDate.now();
+        this.fechaIngreso = fechaIngreso;
+        if (cantidad > 0) {
+            this.estado = "disponible";
+        } else {
+            this.estado = "agotado";
+        }
     }
 
     public abstract double calcularPrecioFinal();
+
     public abstract String obtenerFicha();
 
     public double calcularGanancia() {
@@ -37,46 +36,70 @@ public abstract class Equipo {
     }
 
     public boolean stockBajo() {
-        return cantidad < STOCK_MINIMO;
+        return cantidad < 3;
     }
-
-    // Getters y Setters
-
 
     public String getId() {
         return id;
     }
-
     public void setId(String id) {
         this.id = id;
     }
 
-    public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
-
-    public String getTipo() { return tipo; }
-    public void setTipo(String tipo) { this.tipo = tipo; }
-
-    public double getCostoCompra() { return costoCompra; }
-    public void setCostoCompra(double costoCompra) { this.costoCompra = costoCompra; }
-
-    public double getPrecio() { return precio; }
-    public void setPrecio(double precio) { this.precio = precio; }
-
-    public int getCantidad() { return cantidad; }
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-        this.estado = (cantidad > 0) ? "disponible" : "agotado";
+    public String getNombre() {
+        return nombre;
+    }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getEstado() { return estado; }
-    public void setEstado(String estado) { this.estado = estado; }
+    public String getTipo() {
+        return tipo;
+    }
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 
-    public LocalDate getFechaIngreso() { return fechaIngreso; }
+    public double getCostoCompra() {
+        return costoCompra;
+    }
+    public void setCostoCompra(double costoCompra) {
+        this.costoCompra = costoCompra;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+        if (cantidad > 0) {
+            this.estado = "disponible";
+        } else {
+            this.estado = "agotado";
+        }
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public LocalDate getFechaIngreso() {
+        return fechaIngreso;
+    }
 
     @Override
     public String toString() {
-        return "Tipo: " + tipo + " | Nombre: " + nombre +
+        return "Tipo: " + tipo + " | ID: " + id + " | Nombre: " + nombre +
                 " | Precio: $" + precio + " | Stock: " + cantidad + "\n";
     }
 }

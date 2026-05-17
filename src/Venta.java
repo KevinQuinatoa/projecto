@@ -12,7 +12,7 @@ public class Venta {
         this.equipo = equipo;
         this.cantidadVendida = cantidadVendida;
         this.totalVenta = equipo.calcularPrecioFinal() * cantidadVendida;
-        this.fechaVenta = LocalDate.now(); // fecha automática del sistema
+        this.fechaVenta = LocalDate.now();
     }
 
     public String obtenerComprobante() {
@@ -27,11 +27,25 @@ public class Venta {
                 "Stock rest: " + equipo.getCantidad();
     }
 
-    public int getIdVenta() { return idVenta; }
-    public Equipo getEquipo() { return equipo; }
-    public int getCantidadVendida() { return cantidadVendida; }
-    public double getTotalVenta() { return totalVenta; }
-    public LocalDate getFechaVenta() { return fechaVenta; }
+    public int getIdVenta() {
+        return idVenta;
+    }
+
+    public Equipo getEquipo() {
+        return equipo;
+    }
+
+    public int getCantidadVendida() {
+        return cantidadVendida;
+    }
+
+    public double getTotalVenta() {
+        return totalVenta;
+    }
+
+    public LocalDate getFechaVenta() {
+        return fechaVenta;
+    }
 
     @Override
     public String toString() {

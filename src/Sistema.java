@@ -19,7 +19,7 @@ public class Sistema {
 
     public int menu() {
         System.out.println("\n===== TECNOSTORE =====");
-        System.out.println("Equipos registrados: " + listaEquipos.size() + "/" + Equipo.MAX_INVENTARIO);
+        System.out.println("Equipos registrados: " + listaEquipos.size() + "/20");
         System.out.println("1. Registrar equipo");
         System.out.println("2. Mostrar precio final con IVA");
         System.out.println("3. Mostrar ficha del equipo");
@@ -57,9 +57,8 @@ public class Sistema {
             System.out.print(">> ");
             opc = sc.nextInt();
             if (opc < 1 || opc > 4)
-                System.out.println("Error: opcion no valida. Intente de nuevo.");
+                System.out.println("Opcion no valida. Intente de nuevo.");
         } while (opc < 1 || opc > 4);
-
         switch (opc) {
             case 1: return "4GB";
             case 2: return "8GB";
@@ -80,9 +79,8 @@ public class Sistema {
             System.out.print(">> ");
             opc = sc.nextInt();
             if (opc < 1 || opc > 5)
-                System.out.println("Error: opcion no valida. Intente de nuevo.");
+                System.out.println("Opcion no valida. Intente de nuevo.");
         } while (opc < 1 || opc > 5);
-
         switch (opc) {
             case 1: return "Intel i3";
             case 2: return "Intel i5";
@@ -101,9 +99,8 @@ public class Sistema {
             System.out.print(">> ");
             opc = sc.nextInt();
             if (opc < 1 || opc > 2)
-                System.out.println("Error: opcion no valida. Intente de nuevo.");
+                System.out.println("Opcion no valida. Intente de nuevo.");
         } while (opc < 1 || opc > 2);
-
         switch (opc) {
             case 1: return "laser";
             default: return "inyeccion";
@@ -120,9 +117,8 @@ public class Sistema {
             System.out.print(">> ");
             opc = sc.nextInt();
             if (opc < 1 || opc > 3)
-                System.out.println("Error: opcion no valida. Intente de nuevo.");
+                System.out.println("Opcion no valida. Intente de nuevo.");
         } while (opc < 1 || opc > 3);
-
         switch (opc) {
             case 1: return "HD";
             case 2: return "Full HD";
@@ -143,69 +139,66 @@ public class Sistema {
         return valor;
     }
 
-    // RESTRICCIÓN PRESUPUESTO: precio entre $500 y $2000
-    public double leerPrecio(String mensaje) {
+    public double leerPrecio() {
         double valor;
         do {
-            System.out.print(mensaje + " (entre $" + Equipo.PRECIO_MIN + " y $" + Equipo.PRECIO_MAX + "): ");
+            System.out.print("Ingrese el precio de venta (entre $500 y $2000): ");
             valor = sc.nextDouble();
-            if (valor < Equipo.PRECIO_MIN || valor > Equipo.PRECIO_MAX)
-                System.out.println("Error: el precio debe estar entre $"
-                        + Equipo.PRECIO_MIN + " y $" + Equipo.PRECIO_MAX + ". Intente de nuevo.");
-        } while (valor < Equipo.PRECIO_MIN || valor > Equipo.PRECIO_MAX);
+            if (valor < 500 || valor > 2000)
+                System.out.println("Error: el precio debe estar entre $500 y $2000. Intente de nuevo.");
+        } while (valor < 500 || valor > 2000);
         return valor;
     }
 
-    // RESTRICCIÓN: costo de compra menor al precio de venta
     public double leerCostoCompra(double precioVenta) {
         double costo;
         do {
             System.out.print("Ingrese el costo de compra: ");
             costo = sc.nextDouble();
             if (costo <= 0)
-                System.out.println("  ⚠ Error: debe ser mayor a cero.");
+                System.out.println("Error: debe ser mayor a cero.");
             else if (costo >= precioVenta)
                 System.out.println("Error: el costo debe ser menor al precio de venta ($" + precioVenta + ").");
         } while (costo <= 0 || costo >= precioVenta);
         return costo;
     }
 
-    // RESTRICCIÓN TIEMPO: fecha entre 2020 y hoy
     public LocalDate leerFecha() {
-        LocalDate fecha = null;
-        LocalDate hoy = LocalDate.now();
-        LocalDate fechaMin = LocalDate.of(Equipo.ANIO_FECHA_MIN, 1, 1);
+        int anio, mes, dia;
+        int anioActual = LocalDate.now().getYear();
+
+        // RESTRICCIÓN TIEMPO: año entre 2020 y el año actual
         do {
-            try {
-                System.out.print("Ingrese el anio (" + Equipo.ANIO_FECHA_MIN + "-" + hoy.getYear() + "): ");
-                int anio = sc.nextInt();
-                System.out.print("Ingrese el mes  (1-12): ");
-                int mes = sc.nextInt();
-                System.out.print("Ingrese el dia  (1-31): ");
-                int dia = sc.nextInt();
-                fecha = LocalDate.of(anio, mes, dia);
-                if (fecha.isBefore(fechaMin)) {
-                    System.out.println("Error: la fecha no puede ser anterior a " + fechaMin + ".");
-                    fecha = null;
-                } else if (fecha.isAfter(hoy)) {
-                    System.out.println("Error: la fecha no puede ser futura.");
-                    fecha = null;
-                }
-            } catch (Exception e) {
-                System.out.println("Error: fecha invalida. Intente de nuevo.");
-                sc.nextInt();
-                fecha = null;
-            }
-        } while (fecha == null);
-        return fecha;
+            System.out.print("Ingrese el anio de ingreso (2020-" + anioActual + "): ");
+            anio = sc.nextInt();
+            if (anio < 2020 || anio > anioActual)
+                System.out.println("Error: el anio debe estar entre 2020 y " + anioActual + ". Intente de nuevo.");
+        } while (anio < 2020 || anio > anioActual);
+
+        // mes entre 1 y 12
+        do {
+            System.out.print("Ingrese el mes (1-12): ");
+            mes = sc.nextInt();
+            if (mes < 1 || mes > 12)
+                System.out.println("Error: el mes debe estar entre 1 y 12. Intente de nuevo.");
+        } while (mes < 1 || mes > 12);
+
+        // dia entre 1 y 31
+        do {
+            System.out.print("Ingrese el dia (1-31): ");
+            dia = sc.nextInt();
+            if (dia < 1 || dia > 31)
+                System.out.println("Error: el dia debe estar entre 1 y 31. Intente de nuevo.");
+        } while (dia < 1 || dia > 31);
+
+        return LocalDate.of(anio, mes, dia);
     }
 
     // ── REGISTRAR EQUIPO ──────────────────────────────────────
 
     public void crearEquipo() {
-        // RESTRICCIÓN ESPACIO: máximo 20 equipos
-        if (listaEquipos.size() >= Equipo.MAX_INVENTARIO) {
-            System.out.println("Error: inventario lleno. Maximo " + Equipo.MAX_INVENTARIO + " equipos.");
+        if (listaEquipos.size() >= 20) {
+            System.out.println("Error: inventario lleno. Maximo 20 equipos.");
             return;
         }
 
@@ -218,36 +211,37 @@ public class Sistema {
 
         System.out.print("Ingrese el ID (ej: PC-01): ");
         String id = sc.next();
-
         System.out.print("Ingrese el nombre: ");
         String nombre = sc.next();
 
-        // RESTRICCIÓN PRESUPUESTO
-        double precio = leerPrecio("Ingrese el precio de venta");
-
-        // RESTRICCIÓN: costo < precio de venta
+        double precio = leerPrecio();
         double costoCompra = leerCostoCompra(precio);
-
         int cantidad = leerEnteroPositivo("Ingrese la cantidad en stock: ");
+
+        System.out.println("Ingrese la fecha de ingreso del equipo:");
+        LocalDate fechaIngreso = leerFecha();
 
         switch (opc) {
             case 1:
                 String ram = seleccionarRam();
                 String procesador = seleccionarProcesador();
-                listaEquipos.add(new Computadora(id, nombre, costoCompra, precio, cantidad, ram, procesador));
+                listaEquipos.add(new Computadora(id, nombre, costoCompra,
+                        precio, cantidad, fechaIngreso, ram, procesador));
                 System.out.println("Computadora registrada correctamente.");
                 break;
             case 2:
                 String tipoImpresion = seleccionarTipoImpresion();
                 System.out.print("¿Toner incluido? (true/false): ");
                 boolean toner = sc.nextBoolean();
-                listaEquipos.add(new Impresora(id, nombre, costoCompra, precio, cantidad, tipoImpresion, toner));
+                listaEquipos.add(new Impresora(id, nombre, costoCompra,
+                        precio, cantidad, fechaIngreso, tipoImpresion, toner));
                 System.out.println("Impresora registrada correctamente.");
                 break;
             case 3:
                 int lumenes = leerEnteroPositivo("Ingrese los lumenes: ");
                 String resolucion = seleccionarResolucion();
-                listaEquipos.add(new Proyector(id, nombre, costoCompra, precio, cantidad, lumenes, resolucion));
+                listaEquipos.add(new Proyector(id, nombre, costoCompra,
+                        precio, cantidad, fechaIngreso, lumenes, resolucion));
                 System.out.println("Proyector registrado correctamente.");
                 break;
             default:
@@ -259,7 +253,10 @@ public class Sistema {
     // ── PRECIO FINAL ──────────────────────────────────────────
 
     public void mostrarPrecioFinal() {
-        if (listaEquipos.isEmpty()) { System.out.println("No hay equipos registrados."); return; }
+        if (listaEquipos.isEmpty()) {
+            System.out.println("No hay equipos registrados.");
+            return;
+        }
         int indice = listaEquipos();
         Equipo equipo = listaEquipos.get(indice);
         System.out.println("El precio final de: " + equipo + "con IVA es: $" + equipo.calcularPrecioFinal());
@@ -268,7 +265,10 @@ public class Sistema {
     // ── FICHA ─────────────────────────────────────────────────
 
     public void mostrarFicha() {
-        if (listaEquipos.isEmpty()) { System.out.println("No hay equipos registrados."); return; }
+        if (listaEquipos.isEmpty()) {
+            System.out.println("No hay equipos registrados.");
+            return;
+        }
         int indice = listaEquipos();
         System.out.println(listaEquipos.get(indice).obtenerFicha());
     }
@@ -276,7 +276,10 @@ public class Sistema {
     // ── VENTAS ────────────────────────────────────────────────
 
     public void registrarVenta() {
-        if (listaEquipos.isEmpty()) { System.out.println("No hay equipos registrados."); return; }
+        if (listaEquipos.isEmpty()) {
+            System.out.println("No hay equipos registrados.");
+            return;
+        }
 
         int indice = listaEquipos();
         Equipo equipo = listaEquipos.get(indice);
@@ -290,8 +293,7 @@ public class Sistema {
         int cantidadVenta = leerEnteroPositivo("Ingrese la cantidad a vender: ");
 
         if (cantidadVenta > equipo.getCantidad()) {
-            System.out.println("Error: stock insuficiente. Solo hay "
-                    + equipo.getCantidad() + " unidades.");
+            System.out.println("Error: stock insuficiente. Solo hay " + equipo.getCantidad() + " unidades.");
             return;
         }
 
@@ -302,16 +304,20 @@ public class Sistema {
 
         System.out.println(venta.obtenerComprobante());
 
-        if (equipo.getEstado().equals("agotado"))
+        if (equipo.getEstado().equals("agotado")) {
             System.out.println("Aviso: el equipo quedo sin stock.");
-        else if (equipo.stockBajo())
-            System.out.println("Aviso: stock bajo (menos de " + Equipo.STOCK_MINIMO + " unidades).");
+        } else if (equipo.stockBajo()) {
+            System.out.println("Aviso: stock bajo (menos de 3 unidades).");
+        }
     }
 
     // ── HISTORIAL DE VENTAS ───────────────────────────────────
 
     public void mostrarHistorialVentas() {
-        if (listaVentas.isEmpty()) { System.out.println("No hay ventas registradas."); return; }
+        if (listaVentas.isEmpty()) {
+            System.out.println("No hay ventas registradas.");
+            return;
+        }
         System.out.println("\n--- HISTORIAL DE VENTAS ---");
         double totalGeneral = 0;
         for (Venta venta : listaVentas) {
@@ -332,7 +338,8 @@ public class Sistema {
                 hayAlguno = true;
             }
         }
-        if (!hayAlguno)
+        if (!hayAlguno) {
             System.out.println("Todos los equipos tienen stock suficiente.");
+        }
     }
 }
