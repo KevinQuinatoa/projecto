@@ -139,7 +139,7 @@ public class Sistema {
         return valor;
     }
 
-    public double leerPrecio() {
+    public double leerPrecioComputadora() {
         double valor;
         do {
             System.out.print("Ingrese el precio de venta (entre $500 y $2000): ");
@@ -147,6 +147,17 @@ public class Sistema {
             if (valor < 500 || valor > 2000)
                 System.out.println("Error: el precio debe estar entre $500 y $2000. Intente de nuevo.");
         } while (valor < 500 || valor > 2000);
+        return valor;
+    }
+
+    public double leerPrecio() {
+        double valor;
+        do {
+            System.out.print("Ingrese el precio de venta (entre $20 y $2000): ");
+            valor = sc.nextDouble();
+            if (valor < 20 || valor > 2000)
+                System.out.println("Error: el precio debe estar entre $20 y $2000. Intente de nuevo.");
+        } while (valor < 20 || valor > 2000);
         return valor;
     }
 
@@ -214,8 +225,12 @@ public class Sistema {
         sc.nextLine();
         System.out.print("Ingrese el nombre: ");
         String nombre = sc.nextLine();
-
-        double precio = leerPrecio();
+        double precio;
+        if (opc==1){
+            precio = leerPrecioComputadora();
+        }else {
+            precio = leerPrecio();
+        }
         double costoCompra = leerCostoCompra(precio);
         int cantidad = leerEnteroPositivo("Ingrese la cantidad en stock: ");
 
