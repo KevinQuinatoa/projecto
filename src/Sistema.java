@@ -357,5 +357,18 @@ public class Sistema {
         if (!hayAlguno) {
             System.out.println("Todos los equipos tienen stock suficiente.");
         }
+        System.out.println("¿Desea aumentar el stock de un equipo?");
+        System.out.print("1.Si / 2.No: ");
+        int opc = sc.nextInt();
+
+        if (opc == 1) {
+            int indice = listaEquipos();
+            Equipo equipo = listaEquipos.get(indice);
+            int cantidad = leerEnteroPositivo("Ingrese la cantidad a agregar: ");
+            equipo.setCantidad(equipo.getCantidad() + cantidad);
+            System.out.println("Stock actualizado. Nuevo stock de "
+                    + equipo.getNombre() + ": " + equipo.getCantidad());
+        }
     }
+
 }
