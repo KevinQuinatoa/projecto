@@ -2,7 +2,7 @@ public class Computadora extends Equipo {
     private String ram;
     private String procesador;
 
-    public Computadora(int id, String nombre, double costoCompra, double precio,
+    public Computadora(String id, String nombre, double costoCompra, double precio,
                        int cantidad, String ram, String procesador) {
         super(id, nombre, "Computadora", costoCompra, precio, cantidad);
         this.ram = ram;

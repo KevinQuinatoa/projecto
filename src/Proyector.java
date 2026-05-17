@@ -2,7 +2,7 @@ public class Proyector extends Equipo {
     private int lumenes;
     private String resolucion;
 
-    public Proyector(int id, String nombre, double costoCompra, double precio,
+    public Proyector(String id, String nombre, double costoCompra, double precio,
                      int cantidad, int lumenes, String resolucion) {
         super(id, nombre, "Proyector", costoCompra, precio, cantidad);
         this.lumenes = lumenes;

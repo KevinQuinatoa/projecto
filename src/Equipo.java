@@ -1,21 +1,23 @@
 import java.time.LocalDate;
 
 public abstract class Equipo {
-    private int id;
+    private String id;
     private String nombre;
     private String tipo;
-    private double costoCompra;   // precio al que la tienda lo compró
-    private double precio;        // precio de venta al público
+    private double costoCompra;
+    private double precio;
     private int cantidad;
     private String estado;
-    private LocalDate fechaIngreso; // fecha en que se registró en inventario
+    private LocalDate fechaIngreso;
 
-    // Restricción: máximo 50 productos en inventario (se controla en Sistema)
-    public static final int MAX_INVENTARIO = 50;
-    // Restricción: precio de venta siempre mayor al costo de compra
-    // Restricción: stock mínimo para alerta = 3 unidades
+    // ── RESTRICCIONES DEL SISTEMA ─────────────────────────────
+    public static final int    MAX_INVENTARIO   = 20;      // espacio: máximo 20 equipos
+    public static final double PRECIO_MIN       = 500.0;   // presupuesto mínimo por equipo
+    public static final double PRECIO_MAX       = 2000.0;  // presupuesto máximo por equipo
+    public static final int    ANIO_FECHA_MIN   = 2020;    // tiempo: fecha de ingreso desde 2020
+    public static final int    STOCK_MINIMO     = 3;       // alerta de stock bajo
 
-    public Equipo(int id, String nombre, String tipo,
+    public Equipo(String id, String nombre, String tipo,
                   double costoCompra, double precio, int cantidad) {
         this.id = id;
         this.nombre = nombre;
@@ -24,23 +26,30 @@ public abstract class Equipo {
         this.precio = precio;
         this.cantidad = cantidad;
         this.estado = (cantidad > 0) ? "disponible" : "agotado";
-        this.fechaIngreso = LocalDate.now(); // se registra la fecha automáticamente
+        this.fechaIngreso = LocalDate.now();
     }
 
     public abstract double calcularPrecioFinal();
     public abstract String obtenerFicha();
 
-    // Calcula la ganancia por unidad
     public double calcularGanancia() {
         return calcularPrecioFinal() - costoCompra;
     }
 
     public boolean stockBajo() {
-        return cantidad < 3;
+        return cantidad < STOCK_MINIMO;
     }
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    // Getters y Setters
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }

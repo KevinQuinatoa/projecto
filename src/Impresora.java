@@ -2,7 +2,7 @@ public class Impresora extends Equipo {
     private String tipoImpresion;
     private boolean tonerIncluido;
 
-    public Impresora(int id, String nombre, double costoCompra, double precio,
+    public Impresora(String id, String nombre, double costoCompra, double precio,
                      int cantidad, String tipoImpresion, boolean tonerIncluido) {
         super(id, nombre, "Impresora", costoCompra, precio, cantidad);
         this.tipoImpresion = tipoImpresion;
