@@ -247,8 +247,8 @@ public class Sistema {
                 break;
             case 2:
                 String tipoImpresion = seleccionarTipoImpresion();
-                System.out.print("¿Toner incluido? (true/false): ");
-                boolean toner = sc.nextBoolean();
+                System.out.print("¿Toner incluido? (1.Si/2.No): ");
+                int toner = sc.nextInt();
                 listaEquipos.add(new Impresora(id, nombre, costoCompra,
                         precio, cantidad, fechaIngreso, tipoImpresion, toner));
                 System.out.println("Impresora registrada correctamente.");
