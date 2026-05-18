@@ -31,7 +31,7 @@ public class Sistema {
         return opc;
     }
 
-    // ── SELECCIONAR EQUIPO DE LA LISTA ─────────────────────────
+    // SELECCIONAR EQUIPO DE LA LISTA
 
     public int listaEquipos() {
         System.out.println("Seleccione un equipo:");
@@ -44,7 +44,7 @@ public class Sistema {
         return sc.nextInt();
     }
 
-    // ── MENÚS DE OPCIONES VÁLIDAS ──────────────────────────────
+    //MENÚS DE OPCIONES VÁLIDAS DE RAM
 
     public String seleccionarRam() {
         int opc;
@@ -66,7 +66,7 @@ public class Sistema {
             default: return "32GB";
         }
     }
-
+        //MENU DE PROCESADORES
     public String seleccionarProcesador() {
         int opc;
         do {
@@ -126,7 +126,7 @@ public class Sistema {
         }
     }
 
-    // ── VALIDACIONES NUMÉRICAS ────────────────────────────────
+    //VALIDACIONES NUMÉRICAS
 
     public int leerEnteroPositivo(String mensaje) {
         int valor;
@@ -149,7 +149,7 @@ public class Sistema {
         } while (valor < 500 || valor > 2000);
         return valor;
     }
-
+    //OTROS EQUIPOS
     public double leerPrecio() {
         double valor;
         do {
@@ -183,7 +183,8 @@ public class Sistema {
             System.out.print("Ingrese el anio de ingreso (2020-" + anioActual + "): ");
             anio = sc.nextInt();
             if (anio < 2020 || anio > anioActual)
-                System.out.println("Error: el anio debe estar entre 2020 y " + anioActual + ". Intente de nuevo.");
+                System.out.println("Error: el anio debe estar entre 2020 y "
+                        + anioActual + ". Intente de nuevo.");
         } while (anio < 2020 || anio > anioActual);
 
         // mes entre 1 y 12
@@ -275,7 +276,8 @@ public class Sistema {
         }
         int indice = listaEquipos();
         Equipo equipo = listaEquipos.get(indice);
-        System.out.println("El precio final de: " + equipo + "con IVA es: $" + equipo.calcularPrecioFinal());
+        System.out.println("El precio final de: " + equipo + "con IVA es: $"
+                + equipo.calcularPrecioFinal());
     }
 
     // ── FICHA ─────────────────────────────────────────────────
@@ -300,7 +302,7 @@ public class Sistema {
         int indice = listaEquipos();
         Equipo equipo = listaEquipos.get(indice);
 
-        if (equipo.getEstado().equals("agotado")) {
+        if (equipo.getCantidad() == 0) {
             System.out.println("Error: este equipo esta agotado, no se puede vender.");
             return;
         }
@@ -309,7 +311,8 @@ public class Sistema {
         int cantidadVenta = leerEnteroPositivo("Ingrese la cantidad a vender: ");
 
         if (cantidadVenta > equipo.getCantidad()) {
-            System.out.println("Error: stock insuficiente. Solo hay " + equipo.getCantidad() + " unidades.");
+            System.out.println("Error: stock insuficiente. Solo hay "
+                    + equipo.getCantidad() + " unidades.");
             return;
         }
 
@@ -320,7 +323,7 @@ public class Sistema {
 
         System.out.println(venta.obtenerComprobante());
 
-        if (equipo.getEstado().equals("agotado")) {
+        if (equipo.getCantidad() == 0) {
             System.out.println("Aviso: el equipo quedo sin stock.");
         } else if (equipo.stockBajo()) {
             System.out.println("Aviso: stock bajo (menos de 3 unidades).");
@@ -347,14 +350,14 @@ public class Sistema {
 
     public void mostrarStockBajo() {
         System.out.println("\n--- Equipos con stock bajo ---");
-        boolean hayAlguno = false;
+        int hayAlguno = 0;
         for (Equipo equipo : listaEquipos) {
             if (equipo.stockBajo()) {
                 System.out.println(equipo);
-                hayAlguno = true;
+                hayAlguno = 1;
             }
         }
-        if (!hayAlguno) {
+        if (hayAlguno==0) {
             System.out.println("Todos los equipos tienen stock suficiente.");
         }
         System.out.println("¿Desea aumentar el stock de un equipo?");

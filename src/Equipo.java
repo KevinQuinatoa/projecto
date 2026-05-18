@@ -19,6 +19,11 @@ public abstract class Equipo {
         this.costoCompra = costoCompra;
         this.precio = precio;
         this.cantidad = cantidad;
+        if (cantidad > 0) {
+            this.estado = "disponible";
+        } else {
+            this.estado = "agotado";
+        }
         this.fechaIngreso = fechaIngreso;
         if (cantidad > 0) {
             this.estado = "disponible";
@@ -38,6 +43,7 @@ public abstract class Equipo {
     public boolean stockBajo() {
         return cantidad < 3;
     }
+
 
     public String getId() {
         return id;
@@ -79,11 +85,6 @@ public abstract class Equipo {
     }
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
-        if (cantidad > 0) {
-            this.estado = "disponible";
-        } else {
-            this.estado = "agotado";
-        }
     }
 
     public String getEstado() {
